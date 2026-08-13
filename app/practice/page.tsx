@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ScenarioCard from "../components/ScenarioCard";
 import { scenarios } from "../../scenarios";
 
-export default function Practice() {
+function PracticeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -32,9 +32,6 @@ export default function Practice() {
     sessionStorage.removeItem("whistle-session-count");
   };
 
-  /*
-   * LOAD OR CREATE SESSION
-   */
   useEffect(() => {
     const savedOrder = sessionStorage.getItem(
       "whistle-scenario-order"
@@ -58,9 +55,6 @@ export default function Practice() {
 
     let selectedScenarios: typeof scenarios | null = null;
 
-    /*
-     * RESTORE EXISTING RANDOM ORDER
-     */
     if (
       savedOrder &&
       Number(savedCount) === totalQuestions
@@ -87,9 +81,6 @@ export default function Practice() {
       }
     }
 
-    /*
-     * CREATE NEW RANDOM SESSION
-     */
     if (
       !selectedScenarios ||
       selectedScenarios.length !== totalQuestions
@@ -123,9 +114,6 @@ export default function Practice() {
 
     setPracticeScenarios(selectedScenarios);
 
-    /*
-     * RESTORE CURRENT SCENARIO
-     */
     if (savedScenario !== null) {
       const scenarioNumber = Number(savedScenario);
 
@@ -137,23 +125,14 @@ export default function Practice() {
       }
     }
 
-    /*
-     * RESTORE SCORE
-     */
     if (savedScore !== null) {
       setScore(Number(savedScore));
     }
 
-    /*
-     * RESTORE COMPLETION
-     */
     if (savedCompleted === "true") {
       setCompleted(true);
     }
 
-    /*
-     * SHOW RESUME SCREEN
-     */
     if (
       savedScenario !== null &&
       Number(savedScenario) > 0 &&
@@ -165,9 +144,6 @@ export default function Practice() {
     setLoadedSession(true);
   }, [totalQuestions]);
 
-  /*
-   * SAVE CURRENT SCENARIO
-   */
   useEffect(() => {
     if (!loadedSession) return;
 
@@ -177,9 +153,6 @@ export default function Practice() {
     );
   }, [currentScenario, loadedSession]);
 
-  /*
-   * SAVE SCORE
-   */
   useEffect(() => {
     if (!loadedSession) return;
 
@@ -189,9 +162,6 @@ export default function Practice() {
     );
   }, [score, loadedSession]);
 
-  /*
-   * SAVE COMPLETION
-   */
   useEffect(() => {
     if (!loadedSession) return;
 
@@ -208,9 +178,6 @@ export default function Practice() {
         100
       : 0;
 
-  /*
-   * LOADING
-   */
   if (!loadedSession || practiceScenarios.length === 0) {
     return (
       <main className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -225,13 +192,11 @@ export default function Practice() {
     );
   }
 
-  /*
-   * RESUME SESSION SCREEN
-   */
   if (showResumeChoice) {
     return (
       <main className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
         <div className="max-w-xl w-full bg-white border border-gray-200 rounded-3xl p-8 md:p-10 shadow-sm text-center">
+
           <p className="text-green-700 text-sm font-bold uppercase tracking-wider">
             Welcome Back
           </p>
@@ -281,9 +246,6 @@ export default function Practice() {
     );
   }
 
-  /*
-   * COMPLETION SCREEN
-   */
   if (completed) {
     const accuracy = Math.round(
       (score / practiceScenarios.length) * 100
@@ -293,6 +255,7 @@ export default function Practice() {
       <main className="min-h-screen bg-gray-50 px-6 py-16">
         <div className="max-w-2xl mx-auto">
           <div className="bg-white border border-gray-200 rounded-3xl shadow-sm p-8 md:p-12 text-center">
+
             <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center text-3xl">
               ✓
             </div>
@@ -366,20 +329,18 @@ export default function Practice() {
                 Practice Again →
               </button>
             </div>
+
           </div>
         </div>
       </main>
     );
   }
 
-  /*
-   * MAIN PRACTICE SCREEN
-   */
   return (
     <main className="min-h-screen bg-gray-50 py-10">
+
       <div className="max-w-5xl mx-auto px-6 mb-8">
 
-        {/* TITLE + HOME */}
         <div className="relative flex items-center justify-center">
           <button
             onClick={() => router.push("/")}
@@ -393,10 +354,8 @@ export default function Practice() {
           </h1>
         </div>
 
-        {/* SESSION DASHBOARD */}
         <div className="mt-8 bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
 
-          {/* NAVIGATION */}
           <div className="flex justify-between items-center gap-4">
             <button
               onClick={() => {
@@ -456,7 +415,6 @@ export default function Practice() {
             </button>
           </div>
 
-          {/* SCORE + PROGRESS */}
           <div className="mt-5 flex justify-between text-sm">
             <p className="font-semibold text-gray-700">
               Score: {score}
@@ -467,7 +425,6 @@ export default function Practice() {
             </p>
           </div>
 
-          {/* PROGRESS BAR */}
           <div className="mt-2 w-full h-3 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-green-700 rounded-full transition-all duration-500"
@@ -479,7 +436,6 @@ export default function Practice() {
         </div>
       </div>
 
-      {/* CURRENT SCENARIO */}
       {practiceScenarios[currentScenario] && (
         <ScenarioCard
           key={`${practiceScenarios[currentScenario].videoId}-${practiceScenarios[currentScenario].startTime}`}
@@ -514,6 +470,23 @@ export default function Practice() {
           }}
         />
       )}
+
     </main>
+  );
+}
+
+export default function Practice() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <p className="text-gray-700 font-semibold">
+            Loading practice...
+          </p>
+        </main>
+      }
+    >
+      <PracticeContent />
+    </Suspense>
   );
 }
