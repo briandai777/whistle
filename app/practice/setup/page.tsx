@@ -146,53 +146,68 @@ export default function PracticeSetup() {
               Before you start
             </p>
 
-            <h2 className="mt-2 text-3xl font-extrabold text-gray-950">
-              A few things to know
-            </h2>
+           <h2 className="text-2xl font-extrabold text-gray-950">
+  A few things to know
+</h2>
 
-            <div className="mt-7 space-y-5">
-              <div>
-                <p className="font-bold text-gray-950">
-                  🎥 Videos play through YouTube
-                </p>
-                <p className="mt-1 text-gray-700">
-                  Some YouTube controls may appear. If a clip looks blurry,
-                  you can use YouTube&apos;s quality setting to increase the
-                  resolution.
-                </p>
-              </div>
+<div className="mt-6 space-y-6">
 
-              <div>
-                <p className="font-bold text-gray-950">
-                  🔁 Use Replay Incident
-                </p>
-                <p className="mt-1 text-gray-700">
-                  Use Whistle&apos;s Replay Incident button instead of
-                  restarting the full YouTube video.
-                </p>
-              </div>
+  {/* SOUND */}
+  <div>
+    <p className="font-bold text-gray-900">
+      🔇 Turn off your sound
+    </p>
+    <p className="mt-1 text-gray-600 leading-relaxed">
+      We recommend muting your device before starting. Some videos may contain
+      commentary or audio that could reveal the decision before you make your call.
+    </p>
+  </div>
 
-              <div>
-                <p className="font-bold text-gray-950">
-                  🧠 Make the call you&apos;d make on the field
-                </p>
-                <p className="mt-1 text-gray-700">
-                  Watch the whole incident before choosing your answer.
-                  You can replay it if you need another look.
-                </p>
-              </div>
+  {/* YOUTUBE */}
+  <div>
+    <p className="font-bold text-gray-900">
+      🎥 Videos play through YouTube
+    </p>
+    <p className="mt-1 text-gray-600 leading-relaxed">
+      Some YouTube controls may appear. If a clip looks blurry, you can use
+      YouTube&apos;s quality setting to increase the resolution.
+    </p>
+  </div>
 
-              <div>
-                <p className="font-bold text-gray-950">
-                  ⚖️ Some decisions involve judgment
-                </p>
-                <p className="mt-1 text-gray-700">
-                  Whistle is a practice tool, not an official ruling service.
-                  Match context and referee interpretation can matter.
-                </p>
-              </div>
-            </div>
+  {/* REPLAY */}
+  <div>
+    <p className="font-bold text-gray-900">
+      🔁 Use Replay Incident
+    </p>
+    <p className="mt-1 text-gray-600 leading-relaxed">
+      Use Whistle&apos;s Replay Incident button instead of restarting the full
+      YouTube video.
+    </p>
+  </div>
 
+  {/* MAKE THE CALL */}
+  <div>
+    <p className="font-bold text-gray-900">
+      🧠 Make the call you&apos;d make on the field
+    </p>
+    <p className="mt-1 text-gray-600 leading-relaxed">
+      Watch the whole incident before choosing your answer. You can replay it
+      if you need another look.
+    </p>
+  </div>
+
+  {/* JUDGMENT */}
+  <div>
+    <p className="font-bold text-gray-900">
+      ⚖️ Some decisions involve judgment
+    </p>
+    <p className="mt-1 text-gray-600 leading-relaxed">
+      Whistle is a practice tool, not an official ruling service. Match context
+      and referee interpretation can matter.
+    </p>
+  </div>
+
+</div>
             <button
               onClick={acceptDisclaimer}
               className="mt-8 w-full bg-green-700 text-white py-4 rounded-xl font-bold hover:bg-green-800 transition cursor-pointer"
