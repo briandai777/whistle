@@ -188,7 +188,7 @@ export default function ScenarioCard({
       {/* TOP OVERLAY — leaves top-right controls exposed */}
 <div className="absolute top-0 left-0 w-[90%] h-[50px] bg-black z-10 pointer-events-none flex items-center justify-center rounded-br-lg">
   <span className="text-white text-sm font-semibold tracking-wide">
-    Watch the incident carefully
+    Whistle - Referee Practice
   </span>
 </div>
       </div>
